@@ -15,11 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SweepGradient
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.smartstudy.R
-import com.example.smartstudy.ui.theme.domain.model.Subject
 
 @Composable
 fun SubjectCard(

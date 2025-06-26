@@ -105,7 +105,7 @@ fun StudySessionCard(
                 text = "${session.duration} hr",
                 style = MaterialTheme.typography.bodySmall
             )
-            IconButton(onClick = {onDeleteIconClick}) {
+            IconButton(onClick = onDeleteIconClick) {
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = "Delete Session"
