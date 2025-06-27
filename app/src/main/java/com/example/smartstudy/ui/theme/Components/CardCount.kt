@@ -1,7 +1,7 @@
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ElevatedCard
@@ -14,24 +14,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CardCount(
+fun CountCard(
     modifier: Modifier = Modifier,
-    headingtext: String,
+    headingText: String,
     count: String
 ) {
-    ElevatedCard(modifier = modifier) { // ✅ Use passed modifier
+    ElevatedCard(modifier = modifier) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(horizontal = 4.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = headingtext,
+                text = headingText,
                 style = MaterialTheme.typography.labelSmall
             )
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(5.dp))
             Text(
                 text = count,
                 style = MaterialTheme.typography.bodySmall.copy(fontSize = 30.sp)

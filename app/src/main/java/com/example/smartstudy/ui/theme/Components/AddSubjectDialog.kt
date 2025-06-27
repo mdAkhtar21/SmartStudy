@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -30,31 +32,30 @@ import com.example.smartstudy.ui.theme.domain.model.Subject
 @Composable
 fun AddSubjectDialog(
     isOpen: Boolean,
-    title: String = "Add/Update",
-    onDismissRequest: () -> Unit,
-    onConfirmRequest: () -> Unit,
-    selectedColor: List<Color>,
-    onColorChange: (List<Color>) -> Unit,
+    title: String = "Add/Update Subject",
+    selectedColors: List<Color>,
     subjectName: String,
-    goalHour: String,
+    goalHours: String,
+    onColorChange: (List<Color>) -> Unit,
     onSubjectNameChange: (String) -> Unit,
-    onGoalHourChange: (String) -> Unit
+    onGoalHoursChange: (String) -> Unit,
+    onDismissRequest: () -> Unit,
+    onConfirmButtonClick: () -> Unit
 ) {
     var subjectNameError by rememberSaveable { mutableStateOf<String?>(null) }
-    var goalHourError by rememberSaveable { mutableStateOf<String?>(null) }
+    var goalHoursError by rememberSaveable { mutableStateOf<String?>(null) }
 
     subjectNameError = when {
-        subjectName.isBlank() -> "Please enter the subject name"
-        subjectName.length < 2 -> "Subject name is too short"
-        subjectName.length > 20 -> "Subject name is too large"
+        subjectName.isBlank() -> "Please enter subject name."
+        subjectName.length < 2 -> "Subject name is too short."
+        subjectName.length > 20 -> "Subject name is too long."
         else -> null
     }
-
-    goalHourError = when {
-        goalHour.isBlank() -> "Please enter the goal hour"
-        goalHour.toFloatOrNull() == null -> "Invalid number"
-        goalHour.toFloat() < 1f -> "Minimum hour is 1"
-        goalHour.toFloat() > 1000f -> "Maximum hour is 1000"
+    goalHoursError = when {
+        goalHours.isBlank() -> "Please enter goal study hours."
+        goalHours.toFloatOrNull() == null -> "Invalid number."
+        goalHours.toFloat() < 1f -> "Please set at least 1 hour."
+        goalHours.toFloat() > 1000f -> "Please set a maximum of 1000 hours."
         else -> null
     }
 
@@ -74,13 +75,13 @@ fun AddSubjectDialog(
                             Box(
                                 modifier = Modifier
                                     .size(24.dp)
+                                    .clip(CircleShape)
                                     .border(
                                         width = 1.dp,
-                                        color = if (colors == selectedColor) Color.Black
+                                        color = if (colors == selectedColors) Color.Black
                                         else Color.Transparent,
                                         shape = CircleShape
                                     )
-                                    .clip(CircleShape)
                                     .background(brush = Brush.verticalGradient(colors))
                                     .clickable { onColorChange(colors) }
                             )
@@ -91,33 +92,32 @@ fun AddSubjectDialog(
                         onValueChange = onSubjectNameChange,
                         label = { Text(text = "Subject Name") },
                         singleLine = true,
-                        isError = !subjectNameError.isNullOrEmpty() ,
-                        supportingText = { Text(text = subjectNameError.orEmpty()) }
+                        isError = subjectNameError != null && subjectName.isNotBlank(),
+                        supportingText = { Text(text = subjectNameError.orEmpty())}
                     )
+                    Spacer(modifier = Modifier.height(10.dp))
                     OutlinedTextField(
-                        value = goalHour,
-                        onValueChange = onGoalHourChange,
-                        label = { Text(text = "Goal Study Hour") },
+                        value = goalHours,
+                        onValueChange = onGoalHoursChange,
+                        label = { Text(text = "Goal Study Hours") },
                         singleLine = true,
-                        isError = !goalHourError.isNullOrEmpty() ,
-                        supportingText = { Text(text = goalHourError.orEmpty()) },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number
-                        )
+                        isError = goalHoursError != null && goalHours.isNotBlank(),
+                        supportingText = { Text(text = goalHoursError.orEmpty())},
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                     )
                 }
             },
             dismissButton = {
                 TextButton(onClick = onDismissRequest) {
-                    Text("Cancel")
+                    Text(text = "Cancel")
                 }
             },
             confirmButton = {
                 TextButton(
-                    onClick = onConfirmRequest,
-                    enabled = subjectNameError == null && goalHourError == null
+                    onClick = onConfirmButtonClick,
+                    enabled = subjectNameError == null && goalHoursError == null
                 ) {
-                    Text("Save")
+                    Text(text = "Save")
                 }
             }
         )

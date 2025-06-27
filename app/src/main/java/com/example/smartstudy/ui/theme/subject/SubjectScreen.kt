@@ -66,6 +66,8 @@ fun SubjectScreenRoute(
 ) {
     val viewModel:SubjectViewModel= hiltViewModel()
     SubjectScreen(
+        state = state,
+        onEvent = viewModel::onEvent,
         onBackButtonClick = {
             navigator.navigateUp()
         },

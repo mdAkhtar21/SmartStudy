@@ -5,13 +5,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -25,15 +26,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.smartstudy.R
+import com.example.smartstudy.ui.theme.Util.changeMillisToDateString
+import com.example.smartstudy.ui.theme.Util.toHours
 import com.example.smartstudy.ui.theme.domain.model.Session
 
-fun LazyListScope.studySessionList(
+
+fun LazyListScope.studySessionsList(
     sectionTitle: String,
-    session: List<Session>,
     emptyListText: String,
+    sessions: List<Session>,
     onDeleteIconClick: (Session) -> Unit
-
-
 ) {
     item {
         Text(
@@ -42,8 +44,7 @@ fun LazyListScope.studySessionList(
             modifier = Modifier.padding(12.dp)
         )
     }
-
-    if (session.isEmpty()) {
+    if (sessions.isEmpty()) {
         item {
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -51,11 +52,11 @@ fun LazyListScope.studySessionList(
             ) {
                 Image(
                     modifier = Modifier.size(120.dp),
-                    painter = painterResource(id = R.drawable.img_lamp),
+                    painter = painterResource(R.drawable.img_lamp),
                     contentDescription = emptyListText
                 )
+                Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    modifier = Modifier.fillMaxWidth(),
                     text = emptyListText,
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.Gray,
@@ -63,47 +64,47 @@ fun LazyListScope.studySessionList(
                 )
             }
         }
-    } else {
-        items(session) { session ->
-            StudySessionCard(
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                session=session,
-                onDeleteIconClick={onDeleteIconClick(session)}
-            )
-        }
+    }
+    items(sessions) { session ->
+        StudySessionCard(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+            session = session,
+            onDeleteIconClick = { onDeleteIconClick(session) }
+        )
     }
 }
 
 @Composable
-fun StudySessionCard(
+private fun StudySessionCard(
     modifier: Modifier = Modifier,
     session: Session,
-    onDeleteIconClick:()->Unit
+    onDeleteIconClick: () -> Unit
 ) {
-    ElevatedCard(modifier = modifier) {
+    Card(
+        modifier = modifier
+    ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column (modifier=Modifier.padding(start = 5.dp)){
+            Column(
+                modifier = Modifier.padding(start = 12.dp)
+            ) {
                 Text(
-                    text =session.relatedToSubject,
+                    text = session.relatedToSubject,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    text = "${session.date}",
+                    text = session.date.changeMillisToDateString(),
                     style = MaterialTheme.typography.bodySmall
                 )
-
             }
-            Spacer(modifier=Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = "${session.duration} hr",
-                style = MaterialTheme.typography.bodySmall
+                text = "${session.duration.toHours()} hr",
+                style = MaterialTheme.typography.titleMedium
             )
             IconButton(onClick = onDeleteIconClick) {
                 Icon(

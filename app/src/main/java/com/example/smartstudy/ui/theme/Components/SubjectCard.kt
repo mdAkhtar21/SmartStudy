@@ -21,28 +21,34 @@ import com.example.smartstudy.R
 
 @Composable
 fun SubjectCard(
-    modifier: Modifier=Modifier,
-    subjectName:String,
-    gradientColor:List<Color>,
-    onClick:()->Unit
-){
-    Box(modifier = Modifier.size(150.dp)
-        .clickable { onClick }.
-    background(
-        brush = Brush.verticalGradient(gradientColor),
-        shape = MaterialTheme.shapes.medium
-    )){
-        Column(modifier = Modifier.fillMaxWidth().padding(12.dp),
-            verticalArrangement = Arrangement.Center) {
+    modifier: Modifier = Modifier,
+    subjectName: String,
+    gradientColors: List<Color>,
+    onClick: () -> Unit
+) {
+    Box(
+        modifier = modifier
+            .size(150.dp)
+            .clickable { onClick() }
+            .background(
+                brush = Brush.verticalGradient(gradientColors),
+                shape = MaterialTheme.shapes.medium
+            )
+    ) {
+        Column(
+            modifier = Modifier.padding(12.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
             Image(
-                painter = painterResource(id= R.drawable.img_books),
-                contentDescription = "",
+                painter = painterResource(R.drawable.img_books),
+                contentDescription = subjectName,
                 modifier = Modifier.size(80.dp)
             )
             Text(
                 text = subjectName,
                 style = MaterialTheme.typography.headlineMedium,
-                color = Color.White
+                color = Color.White,
+                maxLines = 1
             )
         }
     }

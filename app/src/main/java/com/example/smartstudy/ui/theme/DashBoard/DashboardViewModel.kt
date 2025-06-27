@@ -1,27 +1,29 @@
 package com.example.smartstudy.ui.theme.DashBoard
-
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.xr.runtime.Session
 import com.example.smartstudy.ui.theme.Util.SnackbarEvent
-import com.example.smartstudy.ui.theme.Util.toHour
+import com.example.smartstudy.ui.theme.Util.toHours
+import com.example.smartstudy.ui.theme.domain.model.Session
 import com.example.smartstudy.ui.theme.domain.model.Subject
 import com.example.smartstudy.ui.theme.domain.model.Task
 import com.example.smartstudy.ui.theme.domain.repository.SessionRepository
 import com.example.smartstudy.ui.theme.domain.repository.SubjectRepository
 import com.example.smartstudy.ui.theme.domain.repository.TaskRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-HiltViewModel
+@HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val subjectRepository: SubjectRepository,
     private val sessionRepository: SessionRepository,
@@ -32,9 +34,9 @@ class DashboardViewModel @Inject constructor(
     val state = combine(
         _state,
         subjectRepository.getTotalSubjectCount(),
-        subjectRepository.getTotalGoalHour(),
+        subjectRepository.getTotalGoalHours(),
         subjectRepository.getAllSubjects(),
-        sessionRepository.getTotalSessionDuration()
+        sessionRepository.getTotalSessionsDuration()
     ) { state, subjectCount, goalHours, subjects, totalSessionDuration ->
         state.copy(
             totalSubjectCount = subjectCount,

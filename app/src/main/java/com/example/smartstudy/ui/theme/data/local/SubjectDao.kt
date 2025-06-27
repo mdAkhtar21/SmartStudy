@@ -13,17 +13,17 @@ interface SubjectDao {
     suspend fun upsertSubject(subject: Subject)
 
     @Query("SELECT COUNT(*) FROM SUBJECT")
-     fun getTotalSubjectCount(): Flow<Int>
+    fun getTotalSubjectCount(): Flow<Int>
 
     @Query("SELECT SUM(goalHours) FROM SUBJECT")
-    fun getTotalGoalHour():Flow<Float>
+    fun getTotalGoalHours(): Flow<Float>
 
-    @Query("SELECT * FROM SUBJECT WHERE subjectId=:subjectId")
-    suspend fun getSubjectById(subjectId:Int): Subject?
+    @Query("SELECT * FROM Subject WHERE subjectId = :subjectId")
+    suspend fun getSubjectById(subjectId: Int): Subject?
 
-    @Query("DELETE FROM SUBJECT WHERE subjectId=:subjectId")
+    @Query("DELETE FROM Subject WHERE subjectId = :subjectId")
     suspend fun deleteSubject(subjectId: Int)
 
-    @Query("SELECT * FROM SUBJECT")
+    @Query("SELECT * FROM Subject")
     fun getAllSubjects(): Flow<List<Subject>>
 }

@@ -16,13 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.smartstudy.ui.theme.domain.model.Subject
 
-@Composable
+
 @OptIn(ExperimentalMaterial3Api::class)
+@Composable
 fun SubjectListBottomSheet(
     sheetState: SheetState,
     isOpen: Boolean,
-    Subjects: List<Subject>,
-    bottonSheetTitle: String = "Related to Subject",
+    subjects: List<Subject>,
+    bottomSheetTitle: String = "Related to subject",
     onSubjectClicked: (Subject) -> Unit,
     onDismissRequest: () -> Unit
 ) {
@@ -36,7 +37,7 @@ fun SubjectListBottomSheet(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     BottomSheetDefaults.DragHandle()
-                    Text(text = bottonSheetTitle)
+                    Text(text = bottomSheetTitle)
                     Spacer(modifier = Modifier.height(10.dp))
                     Divider()
                 }
@@ -45,7 +46,7 @@ fun SubjectListBottomSheet(
             LazyColumn(
                 contentPadding = PaddingValues(16.dp)
             ) {
-                items(Subjects) { subject ->
+                items(subjects) { subject ->
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -55,11 +56,11 @@ fun SubjectListBottomSheet(
                         Text(text = subject.name)
                     }
                 }
-                if (Subjects.isEmpty()) {
+                if (subjects.isEmpty()) {
                     item {
                         Text(
                             modifier = Modifier.padding(10.dp),
-                            text = "Ready to Begin? Add a Subject"
+                            text = "Ready to begin? First, add a subject."
                         )
                     }
                 }

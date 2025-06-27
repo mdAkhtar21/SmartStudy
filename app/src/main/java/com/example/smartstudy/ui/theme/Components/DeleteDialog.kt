@@ -5,31 +5,28 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 
+
 @Composable
 fun DeleteDialog(
     isOpen: Boolean,
     title: String,
     bodyText: String,
     onDismissRequest: () -> Unit,
-    onConfirmRequest: () -> Unit
+    onConfirmButtonClick: () -> Unit
 ) {
     if (isOpen) {
         AlertDialog(
             onDismissRequest = onDismissRequest,
-            title = {
-                Text(text = title)
-            },
-            text = {
-                Text(text = bodyText)
-            },
+            title = { Text(text = title) },
+            text = { Text(text = bodyText) },
             dismissButton = {
                 TextButton(onClick = onDismissRequest) {
-                    Text("Cancel")
+                    Text(text = "Cancel")
                 }
             },
             confirmButton = {
-                TextButton(onClick = onConfirmRequest) {
-                    Text("Delete")
+                TextButton(onClick = onConfirmButtonClick) {
+                    Text(text = "Delete")
                 }
             }
         )

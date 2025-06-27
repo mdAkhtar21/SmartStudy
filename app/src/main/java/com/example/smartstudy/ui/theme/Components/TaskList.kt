@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ElevatedCard
@@ -25,14 +26,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.smartstudy.R
 import com.example.smartstudy.ui.theme.Util.Priority
+import com.example.smartstudy.ui.theme.Util.changeMillisToDateString
 import com.example.smartstudy.ui.theme.domain.model.Task
 
-fun LazyListScope.taskList(
+
+fun LazyListScope.tasksList(
     sectionTitle: String,
-    tasks: List<Task>,
     emptyListText: String,
-    onTaskCardClick:(Int?)->Unit,
-    onCheckboxClick:(Task)->Unit
+    tasks: List<Task>,
+    onTaskCardClick: (Int?) -> Unit,
+    onCheckBoxClick: (Task) -> Unit
 ) {
     item {
         Text(
@@ -41,7 +44,6 @@ fun LazyListScope.taskList(
             modifier = Modifier.padding(12.dp)
         )
     }
-
     if (tasks.isEmpty()) {
         item {
             Column(
@@ -50,11 +52,11 @@ fun LazyListScope.taskList(
             ) {
                 Image(
                     modifier = Modifier.size(120.dp),
-                    painter = painterResource(id = R.drawable.img_tasks),
+                    painter = painterResource(R.drawable.img_tasks),
                     contentDescription = emptyListText
                 )
+                Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    modifier = Modifier.fillMaxWidth(),
                     text = emptyListText,
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.Gray,
@@ -62,38 +64,39 @@ fun LazyListScope.taskList(
                 )
             }
         }
-    } else {
-        items(tasks) { task ->
-            taskCard(
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                task = task,
-                onCheckboxClick = {onCheckboxClick(task)},
-                onClick = {onTaskCardClick(task.taskid)}
-            )
-        }
+    }
+    items(tasks) { task ->
+        TaskCard(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+            task = task,
+            onCheckBoxClick = { onCheckBoxClick(task) },
+            onClick = { onTaskCardClick(task.taskid) }
+        )
     }
 }
 
 @Composable
-fun taskCard(
+private fun TaskCard(
     modifier: Modifier = Modifier,
     task: Task,
-    onCheckboxClick: () -> Unit,
+    onCheckBoxClick: () -> Unit,
     onClick: () -> Unit
 ) {
-    ElevatedCard(modifier = modifier.clickable { onClick() }) {
+    ElevatedCard(
+        modifier = modifier.clickable { onClick() }
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             TaskCheckBox(
                 isComplete = task.isComplete,
                 borderColor = Priority.fromInt(task.Priority).color,
-                onCheckBoxClick = onCheckboxClick
+                onCheckBoxClick = onCheckBoxClick
             )
+            Spacer(modifier = Modifier.width(10.dp))
             Column {
                 Text(
                     text = task.title,
@@ -102,13 +105,11 @@ fun taskCard(
                     style = MaterialTheme.typography.titleMedium,
                     textDecoration = if (task.isComplete) {
                         TextDecoration.LineThrough
-                    } else {
-                        TextDecoration.None
-                    }
+                    } else TextDecoration.None
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "${task.dueDate}",
+                    text = task.dueDate.changeMillisToDateString(),
                     style = MaterialTheme.typography.bodySmall
                 )
             }
