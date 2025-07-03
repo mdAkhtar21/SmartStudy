@@ -4,8 +4,10 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import java.time.Instant
 import java.time.LocalDate
@@ -21,6 +23,18 @@ fun TaskDatePicker(
     onDismissRequest: () -> Unit,
     onConfirmButtonClicked: () -> Unit
 ) {
+    val datePickerState = rememberDatePickerState(
+        selectableDates = object : SelectableDates {
+            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                val selectedDate = Instant
+                    .ofEpochMilli(utcTimeMillis)
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate()
+                val currentDate = LocalDate.now(ZoneId.systemDefault())
+                return selectedDate >= currentDate
+            }
+        }
+    )
     if (isOpen) {
         DatePickerDialog(
             onDismissRequest = onDismissRequest,
@@ -35,17 +49,7 @@ fun TaskDatePicker(
                 }
             },
             content = {
-                DatePicker(
-                    state = state,
-                    dateValidator = { timestamp ->
-                        val selectedDate = Instant
-                            .ofEpochMilli(timestamp)
-                            .atZone(ZoneId.systemDefault())
-                            .toLocalDate()
-                        val currentDate = LocalDate.now(ZoneId.systemDefault())
-                        selectedDate >= currentDate
-                    }
-                )
+                DatePicker(state = datePickerState)
             }
         )
     }

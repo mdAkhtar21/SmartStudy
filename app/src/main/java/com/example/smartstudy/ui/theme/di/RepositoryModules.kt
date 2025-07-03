@@ -14,24 +14,23 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RepositoryModules {
+abstract class RepositoryModule {
 
     @Singleton
     @Binds
     abstract fun bindSubjectRepository(
-        Impl:SubjectRepositoryImpl
-    ):SubjectRepository
+        impl: SubjectRepositoryImpl
+    ): SubjectRepository
 
     @Singleton
     @Binds
     abstract fun bindTaskRepository(
-        Imp:TaskRepositoryImpl
-    ):TaskRepository
+        impl: TaskRepositoryImpl
+    ): TaskRepository
 
     @Singleton
     @Binds
     abstract fun bindSessionRepository(
-        Impl:SessionRepositoryImpl
-    ):SessionRepository
-
+        impl: SessionRepositoryImpl
+    ): SessionRepository
 }

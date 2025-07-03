@@ -13,7 +13,6 @@ import com.example.smartstudy.ui.theme.domain.model.Task
 import com.example.smartstudy.ui.theme.domain.repository.SessionRepository
 import com.example.smartstudy.ui.theme.domain.repository.SubjectRepository
 import com.example.smartstudy.ui.theme.domain.repository.TaskRepository
-import com.example.smartstudy.ui.theme.navArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -222,5 +221,4 @@ class SubjectViewModel @Inject constructor(
             }
         }
     }
-
 }

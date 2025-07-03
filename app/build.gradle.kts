@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
+
 }
 
 android {
@@ -49,6 +50,12 @@ android {
     }
 }
 
+
+ksp {
+    arg("compose-destinations.mode", "navgraphs")
+    arg("compose-destinations.moduleName", "smartstudy")
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -62,6 +69,9 @@ dependencies {
     implementation(libs.androidx.runtime.android)
     implementation(libs.androidx.foundation.android)
     implementation(libs.androidx.runtime)
+    implementation(libs.androidx.animation.android)
+    implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.androidx.espresso.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -72,22 +82,25 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0-alpha02")
 
-    // Compose Destination
-    val destinationVersion = "1.9.52"
-    implementation("io.github.raamcosta.compose-destinations:core:$destinationVersion")
-    ksp("io.github.raamcosta.compose-destinations:ksp:$destinationVersion")
 
-    // Room
-    val roomVersion = "2.5.2"
+    // Compose Destination
+    // Navigation Compose
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+
+    implementation("io.github.raamcosta.compose-destinations:core:1.9.52")
+    ksp("io.github.raamcosta.compose-destinations:ksp:1.9.52")
+
+    // ✅ Compatible with Kotlin 2.0 and Compose Compiler 2.0.0
+    val roomVersion = "2.6.1"
     implementation("androidx.room:room-runtime:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
 
-    // Dagger-Hilt
-    implementation("com.google.dagger:hilt-android:2.48")
-    ksp("com.google.dagger:hilt-android-compiler:2.48")
-    ksp("androidx.hilt:hilt-compiler:1.0.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("com.google.dagger:hilt-android:2.51")
+    ksp("com.google.dagger:hilt-android-compiler:2.51")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+
 
     // Fonts
     implementation("androidx.compose.ui:ui-text-google-fonts:1.5.3")

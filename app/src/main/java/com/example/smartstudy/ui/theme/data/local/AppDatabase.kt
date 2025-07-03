@@ -7,15 +7,14 @@ import com.example.smartstudy.ui.theme.domain.model.Session
 import com.example.smartstudy.ui.theme.domain.model.Subject
 import com.example.smartstudy.ui.theme.domain.model.Task
 
-
 @Database(
     entities = [Subject::class, Session::class, Task::class],
-    version=1
+    version = 1
 )
-@TypeConverters(colorListConverter::class)
+@TypeConverters(ColorListConverter::class)
 abstract class AppDatabase: RoomDatabase() {
-    abstract fun subjectDao(): SubjectDao
-    abstract fun sessionDao(): sessionDao
-    abstract fun taskDao(): TaskDao
 
+    abstract fun subjectDao(): SubjectDao
+    abstract fun taskDao(): TaskDao
+    abstract fun sessionDao(): SessionDao
 }

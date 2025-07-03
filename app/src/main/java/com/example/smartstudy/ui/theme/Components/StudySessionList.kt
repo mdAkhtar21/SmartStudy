@@ -30,7 +30,6 @@ import com.example.smartstudy.ui.theme.Util.changeMillisToDateString
 import com.example.smartstudy.ui.theme.Util.toHours
 import com.example.smartstudy.ui.theme.domain.model.Session
 
-
 fun LazyListScope.studySessionsList(
     sectionTitle: String,
     emptyListText: String,

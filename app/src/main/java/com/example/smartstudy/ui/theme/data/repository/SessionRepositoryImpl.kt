@@ -1,37 +1,48 @@
 package com.example.smartstudy.ui.theme.data.repository
 
-import com.example.smartstudy.ui.theme.data.local.sessionDao
+import com.example.smartstudy.ui.theme.data.local.SessionDao
 import com.example.smartstudy.ui.theme.domain.model.Session
 import com.example.smartstudy.ui.theme.domain.repository.SessionRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.take
 import javax.inject.Inject
 
-class SessionRepositoryImpl @Inject constructor (private val sessionDao: sessionDao): SessionRepository {
+
+class SessionRepositoryImpl @Inject constructor(
+    private val sessionDao: SessionDao
+): SessionRepository {
+
     override suspend fun insertSession(session: Session) {
         sessionDao.insertSession(session)
     }
 
     override suspend fun deleteSession(session: Session) {
-        TODO("Not yet implemented")
+        sessionDao.deleteSession(session)
     }
 
     override fun getAllSessions(): Flow<List<Session>> {
-        TODO("Not yet implemented")
+        return sessionDao.getAllSessions()
+            .map { sessions -> sessions.sortedByDescending { it.date } }
     }
 
     override fun getRecentFiveSessions(): Flow<List<Session>> {
-        TODO("Not yet implemented")
+        return sessionDao.getAllSessions()
+            .map { sessions -> sessions.sortedByDescending { it.date } }
+            .take(count = 5)
     }
 
-    override fun getRecentTenSessionForSubject(subjectId: Int): Flow<List<Session>> {
-        TODO("Not yet implemented")
+    override fun getRecentTenSessionsForSubject(subjectId: Int): Flow<List<Session>> {
+        return sessionDao.getRecentSessionsForSubject(subjectId)
+            .map { sessions -> sessions.sortedByDescending { it.date } }
+            .take(count = 10)
     }
 
-    override fun getTotalSessionDuration(): Flow<Long> {
-        return sessionDao.getTotalSessionDuration()
+    override fun getTotalSessionsDuration(): Flow<Long> {
+        return sessionDao.getTotalSessionsDuration()
     }
 
-    override fun getTotalSessionDurationBySubjectId(subjectId: Int): Flow<Long> {
-        TODO("Not yet implemented")
+    override fun getTotalSessionsDurationBySubject(subjectId: Int): Flow<Long> {
+        return sessionDao.getTotalSessionsDurationBySubject(subjectId)
     }
 }
