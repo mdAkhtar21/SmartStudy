@@ -9,6 +9,7 @@ import com.example.smartstudy.ui.theme.Util.SnackbarEvent
 import com.example.smartstudy.ui.theme.domain.model.Task
 import com.example.smartstudy.ui.theme.domain.repository.SubjectRepository
 import com.example.smartstudy.ui.theme.domain.repository.TaskRepository
+import com.example.smartstudy.ui.theme.navArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -143,11 +144,11 @@ class TaskViewModel @Inject constructor(
                         title = state.title,
                         Description = state.description,
                         dueDate = state.dueDate ?: Instant.now().toEpochMilli(),
-                        priority = state.priority.value,
-                        relatedToSubject= state.relatedToSubject,
+                        Priority = state.priority.value,
+                        releatedToSubject= state.relatedToSubject,
                         isComplete = state.isTaskComplete,
                         taskSubjectId = state.subjectId,
-                        taskId = state.currentTaskId
+                        taskid = state.currentTaskId
                     )
                 )
                 _snackbarEventFlow.emit(
@@ -175,10 +176,10 @@ class TaskViewModel @Inject constructor(
                             description = task.Description,
                             dueDate = task.dueDate,
                             isTaskComplete = task.isComplete,
-                            relatedToSubject = task.relatedToSubject,
-                            priority = Priority.fromInt(task.priority),
+                            relatedToSubject = task.releatedToSubject,
+                            priority = Priority.fromInt(task.Priority),
                             subjectId = task.taskSubjectId,
-                            currentTaskId = task.taskId
+                            currentTaskId = task.taskid
                         )
                     }
                 }

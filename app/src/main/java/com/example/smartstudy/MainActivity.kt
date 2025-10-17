@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.app.ActivityCompat
+import com.example.smartstudy.ui.theme.NavGraphs
 import com.example.smartstudy.ui.theme.SmartStudyTheme
 import com.example.smartstudy.ui.theme.destinations.SessionScreenRouteDestination
 import com.example.smartstudy.ui.theme.session.StudySessionTimerService

@@ -1,10 +1,13 @@
+// In your app/build.gradle.kts
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+
+    // Apply the annotation processing plugins here
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
-
 }
 
 android {
@@ -50,12 +53,6 @@ android {
     }
 }
 
-
-ksp {
-    arg("compose-destinations.mode", "navgraphs")
-    arg("compose-destinations.moduleName", "smartstudy")
-}
-
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -65,7 +62,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    //  implementation(libs.androidx.material3.android)
     implementation(libs.androidx.runtime.android)
     implementation(libs.androidx.foundation.android)
     implementation(libs.androidx.runtime)
@@ -80,31 +76,24 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0-alpha02")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
 
+    // Corrected Compose Destinations dependency
+    implementation("io.github.raamcosta.compose-destinations:core:1.10.0")
+    ksp("io.github.raamcosta.compose-destinations:ksp:1.10.0")
 
-    // Compose Destination
-    // Navigation Compose
-    implementation("androidx.navigation:navigation-compose:2.7.7")
-
-    implementation("io.github.raamcosta.compose-destinations:core:1.9.52")
-    ksp("io.github.raamcosta.compose-destinations:ksp:1.9.52")
-
-    // ✅ Compatible with Kotlin 2.0 and Compose Compiler 2.0.0
-    val roomVersion = "2.6.1"
+    // Room
+    val roomVersion = "2.7.0-alpha01"
     implementation("androidx.room:room-runtime:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
 
+    // Hilt
     implementation("com.google.dagger:hilt-android:2.51")
     ksp("com.google.dagger:hilt-android-compiler:2.51")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
-
-
-    // Fonts
+    // Fonts and Desugaring
     implementation("androidx.compose.ui:ui-text-google-fonts:1.5.3")
-
-    // Desugaring
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 }
