@@ -38,8 +38,8 @@ Built with **Kotlin** and **Jetpack Compose**, following clean **MVVM architectu
 </p>
 
 <p align="center">
-  <img src="https://github.com/mdAkhtar21/SmartStudy/blob/master/README.md/SessionScreen.jpeg?raw=true" width="250" />
-  <img src="https://github.com/mdAkhtar21/SmartStudy/blob/master/README.md/TaskScreen.jpeg?raw=true" width="250" />
+  <img src="https://github.com/mdAkhtar21/SmartStudy/blob/master/SessionScreen.jpeg?raw=true" width="250" />
+  <img src="https://github.com/mdAkhtar21/SmartStudy/blob/master/TaskScreen.jpeg?raw=true" width="250" />
 </p>
 
 ---
