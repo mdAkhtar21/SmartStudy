@@ -46,9 +46,8 @@ Built with **Kotlin** and **Jetpack Compose**, following clean **MVVM architectu
 
 ## 📥 Download
 
-👉 [**Click here to Download Smart Study App (APK)**](https://github.com/mdAkhtar21/SmartStudy/releases/download/v1.0.0/app-debug.apk)
+👉 [📲 Click here to Download Smart Study App (APK)](https://github.com/mdAkhtar21/SmartStudy/releases/download/v1.0.0/app-debug.apk)
 
-Or visit the [Latest Release](https://github.com/mdAkhtar21/SmartStudy/releases/latest) page.
 
 ---
 
